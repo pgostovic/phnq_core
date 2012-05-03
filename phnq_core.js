@@ -31,12 +31,12 @@
 				if(this.init)
 					this.init.apply(this, arguments);
 			};
-			
+
 			for(var k in ext)
 			{
 				cls.prototype[k] = ext[k];
 			}
-			
+
 			return cls;
 		},
 
@@ -44,7 +44,7 @@
 		{
 			return s.replace(/"/g, "\\\"");
 		},
-		
+
 		getRelPath: function(src)
 		{
 			this.assertServer();
