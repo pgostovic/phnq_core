@@ -42,7 +42,7 @@
 
 		escapeJS: function(s)
 		{
-			return s.replace(/"/g, "\\\"");
+			return s.replace(/"/g, "\\\"").replace(/\n/g, "\\n");
 		},
 
 		getRelPath: function(src)
