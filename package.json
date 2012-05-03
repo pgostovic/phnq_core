@@ -1,0 +1,10 @@
+{
+  "name"          : "phnq_core",
+  "description"   : "JavaScript core utilities",
+  "homepage"      : "https://github.com/pgostovic/phnq_core",
+  "keywords"      : ["phnq", "core", "server", "client", "browser"],
+  "author"        : "Patrick Gostovic <pg@phnq.org>",
+  "repository"    : {"type": "git", "url": "git://github.com/pgostovic/phnq_core.git"},
+  "main"          : "phnq_core.js",
+  "version"       : "1.0.0"
+}
