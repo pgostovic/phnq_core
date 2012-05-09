@@ -49,6 +49,12 @@
 		{
 			this.assertServer();
 			return require("path").relative(src, __filename);
+		},
+
+		getFileName: function()
+		{
+			this.assertServer();
+			return __filename;
 		}
 	};
 
