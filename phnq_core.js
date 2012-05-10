@@ -31,18 +31,33 @@
 				if(this.init)
 					this.init.apply(this, arguments);
 			};
-
-			for(var k in ext)
-			{
-				cls.prototype[k] = ext[k];
-			}
-
+			this.extend(cls.prototype, ext);
 			return cls;
+		},
+
+		extend: function(dest, obj)
+		{
+			for(var k in obj)
+			{
+				dest[k] = obj[k];
+			}
 		},
 
 		escapeJS: function(s)
 		{
 			return s.replace(/"/g, "\\\"").replace(/\n/g, "\\n");
+		},
+
+		trimLines: function(str)
+		{
+			var buf = [];
+			var lines = str.split("\n");
+			var linesLen = lines.length;
+			for(var i=0; i<linesLen; i++)
+			{
+				buf.push(lines[i].trim());
+			}
+			return buf.join("\n");
 		},
 
 		getRelPath: function(src)
