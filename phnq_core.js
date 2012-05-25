@@ -79,6 +79,11 @@
 	}
 	else if(phnq_core.isClient())
 	{
+		var baseUriRe = /^(https?:\/\/[^\/]*).*$/;
+		var baseUriMatch = baseUriRe.exec($("script").last().get(0).src);
+		if(baseUriMatch)
+			phnq_core.baseURI = baseUriMatch[1];
+
 		window.phnq_core = phnq_core;
 		window.require = function(name)
 		{
