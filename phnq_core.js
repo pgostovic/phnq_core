@@ -73,6 +73,76 @@
 		}
 	};
 
+	var serBase = 32;
+	var serWidth = 24;
+	phnq_core.BitSet = phnq_core.clazz(
+	{
+		init: function(arr)
+		{
+			this.comps = [];
+			if(arr)
+			{
+				for(var i=0; i<arr.length; i++)
+				{
+					this.comps.push(parseInt(arr[i], serBase));
+				}
+			}
+		},
+
+		set: function(bit, val)
+		{
+			val = (val === undefined) ? 1 : val;
+			var idx = Math.floor(bit/serWidth);
+			while(this.comps.length < (idx+1))
+				this.comps.push(0);
+
+			this.comps[idx] = this.comps[idx] | val<<(bit%serWidth);
+		},
+
+		unset: function(bit)
+		{
+			this.set(idx, 0);
+		},
+
+		isSet: function(bit)
+		{
+			var idx = Math.floor(bit/serWidth);
+			return !!(this.comps[idx] & 1<<(bit%serWidth));
+		},
+
+		trim: function()
+		{
+			while(this.comps[this.comps.length-1] == 0)
+			{
+				this.comps.pop();
+			}
+		},
+
+		toArray: function()
+		{
+			var arr = [];
+			for(var i=0; i<this.comps.length; i++)
+			{
+				arr.push(this.comps[i].toString(serBase));
+			}
+			return arr;
+		},
+
+		toString: function()
+		{
+			this.trim();
+
+			var idxs = [];
+			var len = this.comps.length * serWidth;
+			for(var i=0; i<len; i++)
+			{
+				if(this.isSet(i))
+					idxs.push(i);
+			}
+			return "[ " + idxs.join(", ") + " ]";
+		}
+	});
+
 	if(phnq_core.isServer())
 	{
 		module.exports = phnq_core;
