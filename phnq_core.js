@@ -41,6 +41,7 @@
 			{
 				dest[k] = obj[k];
 			}
+			return dest;
 		},
 
 		escapeJS: function(s)
@@ -70,6 +71,21 @@
 		{
 			this.assertServer();
 			return __filename;
+		},
+
+		parallel: function(fns, callback)
+		{
+			var len = fns.length;
+			var remaining = len;
+			for(var i=0; i<len; i++)
+			{
+				var fn = fns[i];
+				fn(function()
+				{
+					if(--remaining == 0)
+						callback();
+				});
+			}
 		}
 	};
 
