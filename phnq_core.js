@@ -77,13 +77,23 @@
 		{
 			var len = fns.length;
 			var remaining = len;
+			var stats =
+			{
+				durations:[],
+			};
+			var startTime = new Date().getTime();
 			for(var i=0; i<len; i++)
 			{
 				var fn = fns[i];
 				fn(function()
 				{
+					stats.durations.push(new Date().getTime() - startTime);
 					if(--remaining == 0)
-						callback();
+					{
+						stats.totalTime = new Date().getTime() - startTime;
+						stats.averageTime = eval(stats.durations.join("+")) / stats.durations.length;
+						callback(stats);
+					}
 				});
 			}
 		}
