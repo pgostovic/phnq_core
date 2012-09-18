@@ -35,11 +35,17 @@
 			return cls;
 		},
 
-		extend: function(dest, obj)
+		/**
+		*	Copies the keys and values from one object onto another
+		*	@param {object} dest object onto which keys and values will be copied
+		*	@param {object} src object from which keys and values will be copied
+		*	@return {object} the destination object
+		*/
+		extend: function(dest, src)
 		{
-			for(var k in obj)
+			for(var k in src)
 			{
-				dest[k] = obj[k];
+				dest[k] = src[k];
 			}
 			return dest;
 		},
