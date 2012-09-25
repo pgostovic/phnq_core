@@ -50,6 +50,24 @@
 			return dest;
 		},
 
+		getJsPath: function(obj, path)
+		{
+			try
+			{
+				var val = obj;
+				var comps = path.split(/[/\.]/);
+				for(var i=0; i<comps.length; i++)
+				{
+					val = val[comps[i]];
+				}
+				return val === undefined ? null : val;
+			}
+			catch(ex)
+			{
+				return null;
+			}
+		},
+
 		escapeJS: function(s)
 		{
 			return s.replace(/"/g, "\\\"").replace(/\n/g, "\\n");

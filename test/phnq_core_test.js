@@ -14,6 +14,42 @@ describe("phnq_core", function()
 		});
 	});
 
+	describe("getJsPath()", function()
+	{
+		var obj =
+		{
+			user:
+			{
+				address:
+				{
+					street: "123 Main St.",
+					city: "Toronto",
+					province: "Ontario"
+				}
+			}
+		};
+
+		it("should return the correct value for an extisting path -- dots", function()
+		{
+			assert.equal(phnq_core.getJsPath(obj, "user.address.province"), "Ontario");
+		});
+
+		it("should return the correct value for an extisting path -- slashes", function()
+		{
+			assert.equal(phnq_core.getJsPath(obj, "user/address/city"), "Toronto");
+		});
+
+		it("should return null for a non-existent path -- dots", function()
+		{
+			assert.equal(phnq_core.getJsPath(obj, "user.address.state"), null);
+		});
+
+		it("should return null for a non-existent path -- slashes", function()
+		{
+			assert.equal(phnq_core.getJsPath(obj, "user.address.state"), null);
+		});
+	});
+
 	describe("escapeJS()", function()
 	{
 		it("should escape quotes", function()
