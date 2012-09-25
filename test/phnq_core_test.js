@@ -1,5 +1,6 @@
 var assert = require("assert");
 var phnq_core = require("phnq_core");
+var _ = require("underscore");
 
 describe("phnq_core", function()
 {
@@ -31,22 +32,36 @@ describe("phnq_core", function()
 
 		it("should return the correct value for an extisting path -- dots", function()
 		{
-			assert.equal(phnq_core.getJsPath(obj, "user.address.province"), "Ontario");
+			assert.equal(phnq_core.jsPath(obj, "user.address.province"), "Ontario");
 		});
 
 		it("should return the correct value for an extisting path -- slashes", function()
 		{
-			assert.equal(phnq_core.getJsPath(obj, "user/address/city"), "Toronto");
+			assert.equal(phnq_core.jsPath(obj, "user/address/city"), "Toronto");
 		});
 
 		it("should return null for a non-existent path -- dots", function()
 		{
-			assert.equal(phnq_core.getJsPath(obj, "user.address.state"), null);
+			assert.equal(phnq_core.jsPath(obj, "user.address.state"), null);
 		});
 
 		it("should return null for a non-existent path -- slashes", function()
 		{
-			assert.equal(phnq_core.getJsPath(obj, "user.address.state"), null);
+			assert.equal(phnq_core.jsPath(obj, "user/address/state"), null);
+		});
+
+		it("should correctly set a value for an extisting path -- dots", function()
+		{
+			var objClone = _.clone(obj);
+			phnq_core.jsPath(objClone, "user.address.province", "P.E.I.");
+			assert.equal(objClone.user.address.province, "P.E.I.");
+		});
+
+		it("should correctly set a value for an extisting path -- slashes", function()
+		{
+			var objClone = _.clone(obj);
+			phnq_core.jsPath(objClone, "user/address/province", "P.E.I.");
+			assert.equal(objClone.user.address.province, "P.E.I.");
 		});
 	});
 

@@ -50,7 +50,7 @@
 			return dest;
 		},
 
-		getJsPath: function(obj, path)
+		jsPath: function(obj, path, valToSet)
 		{
 			try
 			{
@@ -58,7 +58,10 @@
 				var comps = path.split(/[/\.]/);
 				for(var i=0; i<comps.length; i++)
 				{
-					val = val[comps[i]];
+					if(valToSet && i == comps.length-1)
+						val = val[comps[i]] = valToSet;
+					else
+						val = val[comps[i]];
 				}
 				return val === undefined ? null : val;
 			}
