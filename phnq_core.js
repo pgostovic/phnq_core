@@ -100,8 +100,69 @@
 			return __filename;
 		},
 
-		parallel: function(fns, callback)
+
+		/*
+			Call like phnq_core.parallel(fn1, fn2, ... , fnN, callback). Example...
+
+				phnq_core.parallel(function(done)
+				{
+					done();
+				}, function(done)
+				{
+					done();
+				}, function()
+				{
+					// Callback
+				});
+
+			Or, call like phnq_core.parallel(fns, callback). Example...
+
+				var fns = [];
+
+				fns.push(function(done)
+				{
+					done();
+				});
+
+				fns.push(function(done)
+				{
+					done();
+				});
+
+				phnq_core.parallel(fns, function()
+				{
+					// Callback
+				});
+		*/
+		parallel: function()
 		{
+			var fns, callback;
+			if(arguments.length == 2 && arguments[0] instanceof Array && typeof(arguments[1]) == "function")
+			{
+				fns = arguments[0];
+				callback = arguments[1];
+			}
+			else
+			{
+				fns = [];
+				var numArgs = arguments.length;
+				for(var i=0; i<numArgs; i++)
+				{
+					var arg = arguments[i];
+					if(typeof(arg) == "function")
+					{
+						if(i == numArgs-1)
+							callback = arg;
+						else
+							fns.push(arg);
+					}
+					else
+					{
+						throw "Bad arguments: must be phnq_core.parallel(fn1, fn2, ... , fnN, callback) or phnq_core.parallel(fns, callback)";
+					}
+				}
+			}
+
 			var len = fns.length;
 			var remaining = len;
 			var stats =
