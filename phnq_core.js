@@ -86,14 +86,16 @@
 			return s.replace(/"/g, "\\\"").replace(/\n/g, "\\n");
 		},
 
-		trimLines: function(str)
+		trimLines: function(str, excludeEmptyLines)
 		{
 			var buf = [];
 			var lines = str.split("\n");
 			var linesLen = lines.length;
 			for(var i=0; i<linesLen; i++)
 			{
-				buf.push(lines[i].trim());
+				var line = lines[i].trim();
+				if(line || !excludeEmptyLines)
+					buf.push(line);
 			}
 			return buf.join("\n");
 		},
