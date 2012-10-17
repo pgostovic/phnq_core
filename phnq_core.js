@@ -50,6 +50,16 @@
 			return dest;
 		},
 
+		clone: function(obj)
+		{
+			if(obj instanceof Array)
+				return obj.slice();
+			else if(typeof(obj) == "object")
+				return this.extend({}, obj);
+			else
+				return obj;
+		},
+
 		jsPath: function(obj, path, valToSet)
 		{
 			try
