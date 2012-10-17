@@ -1,6 +1,5 @@
 var assert = require("assert");
-var phnq_core = require("phnq_core");
-var _ = require("underscore");
+var phnq_core = require("../phnq_core");
 
 describe("phnq_core", function()
 {
@@ -52,14 +51,14 @@ describe("phnq_core", function()
 
 		it("should correctly set a value for an extisting path -- dots", function()
 		{
-			var objClone = _.clone(obj);
+			var objClone = phnq_core.clone(obj);
 			phnq_core.jsPath(objClone, "user.address.province", "P.E.I.");
 			assert.equal(objClone.user.address.province, "P.E.I.");
 		});
 
 		it("should correctly set a value for an extisting path -- slashes", function()
 		{
-			var objClone = _.clone(obj);
+			var objClone = phnq_core.clone(obj);
 			phnq_core.jsPath(objClone, "user/address/province", "P.E.I.");
 			assert.equal(objClone.user.address.province, "P.E.I.");
 		});
