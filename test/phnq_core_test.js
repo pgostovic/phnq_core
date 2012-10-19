@@ -10,7 +10,7 @@ describe("phnq_core", function()
 			var o1 = {foo:"bar"};
 			var o2 = {num:42};
 			phnq_core.extend(o1, o2);
-			assert.deepEqual(o1, {foo:"bar", num:43});
+			assert.deepEqual(o1, {foo:"bar", num:42});
 		});
 	});
 
