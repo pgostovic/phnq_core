@@ -86,4 +86,108 @@ describe("phnq_core", function()
 			assert.equal(phnq_core.trimLines(untrimmed), trimmed);
 		});
 	});
+
+	describe("clazz", function()
+	{
+		var Animal, Dog, Human, Snake;
+
+		beforeEach(function()
+		{
+			Animal = phnq_core.clazz(
+			{
+				init: function(type)
+				{
+					this.type = type;
+				},
+
+				isAlive: function()
+				{
+					return true;
+				},
+
+				getNumLegs: function()
+				{
+					return 0;
+				},
+
+				hasLegs: function()
+				{
+					return this.getNumLegs() > 0;
+				}
+			});
+
+			Dog = Animal.extend(
+			{
+				init: function()
+				{
+					this._super.init("Dog");
+				},
+
+				getNumLegs: function()
+				{
+					return 4;
+				}
+			});
+
+			Human = Animal.extend(
+			{
+				init: function()
+				{
+					this._super.init("Human");
+				},
+
+				getNumLegs: function()
+				{
+					return 2;
+				}
+			});
+
+			Snake = Animal.extend(
+			{
+				init: function()
+				{
+					this._super.init("Snake");
+				}
+			});
+		});
+
+
+		it("should inherit from super", function()
+		{
+			var d = new Dog();
+			var h = new Human();
+			var s = new Snake();
+
+			assert.equal(true, d.isAlive());
+			assert.equal(true, h.isAlive());
+			assert.equal(true, s.isAlive());
+		});
+
+		it("should be able to call super's init from concrete init", function()
+		{
+			var d = new Dog();
+			var h = new Human();
+			var s = new Snake();
+
+			assert.equal("Dog", d.type);
+			assert.equal("Human", h.type);
+			assert.equal("Snake", s.type);
+		});
+
+		it("should call an overridden concrete method from super class", function()
+		{
+			var d = new Dog();
+			var h = new Human();
+			var s = new Snake();
+
+			assert.equal(4, d.getNumLegs());
+			assert.equal(true, d.hasLegs());
+
+			assert.equal(2, h.getNumLegs());
+			assert.equal(true, h.hasLegs());
+
+			assert.equal(0, s.getNumLegs());
+			assert.equal(false, s.hasLegs());
+		})
+	});
 });
