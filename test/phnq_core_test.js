@@ -190,4 +190,46 @@ describe("phnq_core", function()
 			assert.equal(false, s.hasLegs());
 		})
 	});
+
+	describe("phnq_core.BitSet", function()
+	{
+		it("should get and set bits", function()
+		{
+			var bitset = new phnq_core.BitSet();
+
+			var rnd = [];
+			for(var i=0; i<1000; i++)
+			{
+				rnd[i] = Math.random() > 0.5;
+				if(rnd[i])
+					bitset.set(i);
+			}
+
+			for(var i=0; i<1000; i++)
+			{
+				assert.equal(rnd[i], bitset.isSet(i));
+			}
+		});
+
+		it("should serialize to an array and deserialize from an array", function()
+		{
+			var bitset = new phnq_core.BitSet();
+
+			var rnd = [];
+			for(var i=0; i<1000; i++)
+			{
+				rnd[i] = Math.random() > 0.5;
+				if(rnd[i])
+					bitset.set(i);
+			}
+
+			var arr = bitset.toArray();
+
+			var bitset2 = new phnq_core.BitSet(arr);
+			for(var i=0; i<1000; i++)
+			{
+				assert.equal(rnd[i], bitset2.isSet(i));
+			}
+		});
+	});
 });
