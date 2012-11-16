@@ -28,31 +28,6 @@
 		{
 			var cls = function()
 			{
-				if(this._super)
-				{
-					var _this = this;
-					var supKeys = [];
-					for(var k in this._super)
-					{
-						if(typeof(this._super[k]) == "function")
-							supKeys.push(k);
-					}
-					var nextKey = function()
-					{
-						var k = supKeys.pop();
-						if(k)
-						{
-							var fn = _this._super[k];
-							_this._super[k] = function()
-							{
-								fn.apply(_this, arguments);
-							};
-							nextKey();
-						}
-					};
-					nextKey();
-				}
-
 				if(this.init)
 					this.init.apply(this, arguments);
 			};
@@ -61,8 +36,14 @@
 			cls.extend = function(subExt)
 			{
 				var dest = phnq_core.clone(cls.prototype);
-				dest._super = phnq_core.clone(dest);
-				return phnq_core.clazz(phnq_core.extend(dest, subExt));
+				for(var k in subExt)
+				{
+					if(dest[k] !== undefined)
+						dest["_"+k] = dest[k];
+
+					dest[k] = subExt[k];
+				}
+				return phnq_core.clazz(dest);
 			}
 
 			return cls;

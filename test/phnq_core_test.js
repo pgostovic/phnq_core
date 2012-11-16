@@ -113,6 +113,11 @@ describe("phnq_core", function()
 				hasLegs: function()
 				{
 					return this.getNumLegs() > 0;
+				},
+
+				getTotalNums: function()
+				{
+					return 5;
 				}
 			});
 
@@ -120,12 +125,17 @@ describe("phnq_core", function()
 			{
 				init: function()
 				{
-					this._super.init("Dog");
+					this._init("Dog");
 				},
 
 				getNumLegs: function()
 				{
 					return 4;
+				},
+
+				getTotalNums: function()
+				{
+					return 1 + this._getTotalNums();
 				}
 			});
 
@@ -133,12 +143,17 @@ describe("phnq_core", function()
 			{
 				init: function()
 				{
-					this._super.init("Human");
+					this._init("Human");
 				},
 
 				getNumLegs: function()
 				{
 					return 2;
+				},
+
+				getTotalNums: function()
+				{
+					return 2 + this._getTotalNums();
 				}
 			});
 
@@ -146,7 +161,12 @@ describe("phnq_core", function()
 			{
 				init: function()
 				{
-					this._super.init("Snake");
+					this._init("Snake");
+				},
+
+				getTotalNums: function()
+				{
+					return 3 + this._getTotalNums();
 				}
 			});
 		});
@@ -188,6 +208,17 @@ describe("phnq_core", function()
 
 			assert.equal(0, s.getNumLegs());
 			assert.equal(false, s.hasLegs());
+		});
+
+		it("should be able to call super method from sub method", function()
+		{
+			var d = new Dog();
+			var h = new Human();
+			var s = new Snake();
+
+			assert.equal(6, d.getTotalNums());
+			assert.equal(7, h.getTotalNums());
+			assert.equal(8, s.getTotalNums());
 		})
 	});
 
