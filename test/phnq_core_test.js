@@ -263,4 +263,63 @@ describe("phnq_core", function()
 			}
 		});
 	});
+
+	describe("phnq_core.parallel", function()
+	{
+		it("should perform three async functions in parallel", function(doneTest)
+		{
+			var tos =
+			[
+				Math.round(Math.random() * 1000),
+				Math.round(Math.random() * 1000),
+				Math.round(Math.random() * 1000)
+			];
+
+			var finishOrder = [];
+			var finishTimes = [];
+
+			var t1 = new Date().getTime();
+
+			phnq_core.parallel(
+				function(done)
+				{
+					setTimeout(function()
+					{
+						finishOrder.push(0);
+						finishTimes.push(new Date().getTime() - t1);
+						done();
+					}, tos[0]);
+				},
+				function(done)
+				{
+					setTimeout(function()
+					{
+						finishOrder.push(1);
+						finishTimes.push(new Date().getTime() - t1);
+						done();
+					}, tos[1]);
+				},
+				function(done)
+				{
+					setTimeout(function()
+					{
+						finishOrder.push(2);
+						finishTimes.push(new Date().getTime() - t1);
+						done();
+					}, tos[2]);
+				},
+				function()
+				{
+					var totalTime = new Date().getTime() - t1;
+					var slowestFnTime = finishTimes[2];
+
+					var closeEnough = Math.abs(totalTime - slowestFnTime) < 3;
+
+					assert.ok(closeEnough, "total time is within 3ms of longest running function");
+
+					doneTest();
+				});
+		});
+
+	});
 });
