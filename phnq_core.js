@@ -33,8 +33,15 @@
 			};
 			phnq_core.extend(cls.prototype, ext);
 
+			/**
+			*	During extension, if a subExt property collides with a existing
+			*	property, then the existing property is renamed by prefixing
+			*	with an underscore.
+			*/
 			cls.extend = function(subExt)
 			{
+				subExt = subExt || {};
+
 				var dest = phnq_core.clone(cls.prototype);
 				for(var k in subExt)
 				{
