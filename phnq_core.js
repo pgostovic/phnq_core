@@ -297,7 +297,8 @@
 	else if(phnq_core.isClient())
 	{
 		var baseUriRe = /^(https?:\/\/[^\/]*).*$/;
-		var baseUriMatch = baseUriRe.exec($("script").last().get(0).src);
+		var scripts = document.getElementsByTagName("script");
+		var baseUriMatch = baseUriRe.exec(scripts[scripts.length-1].src);
 		if(baseUriMatch)
 			phnq_core.baseURI = baseUriMatch[1];
 
