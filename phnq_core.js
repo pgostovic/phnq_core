@@ -140,6 +140,9 @@
 			var fs = require("fs");
 			var path = require("path");
 			
+			if(!fs.existsSync(dir))
+				return;
+			
 			var list = fs.readdirSync(dir);
 			for(var i = 0; i < list.length; i++)
 			{
