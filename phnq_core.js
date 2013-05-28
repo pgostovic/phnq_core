@@ -162,7 +162,7 @@
 				}
 			}
 			fs.rmdirSync(dir);
-		}
+		},
 
 		/*
 			Call like phnq_core.parallel(fn1, fn2, ... , fnN, callback). Example...
