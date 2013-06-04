@@ -86,6 +86,37 @@ describe("phnq_core", function()
 			assert.equal(phnq_core.trimLines(untrimmed), trimmed);
 		});
 	});
+	
+	describe("jsNS()", function()
+	{
+		it("create an arbitrary namespace with no collisions", function()
+		{
+			var newNS = phnq_core.jsNS("bacon.cheese.burger.hot.peppers");
+			assert.equal(newNS, bacon.cheese.burger.hot.peppers);
+		});
+		
+		it("create an arbitrary namespace with collisions", function()
+		{
+			var newNS = phnq_core.jsNS("bacon.cheese.burger.hot.peppers");
+			assert.equal(newNS, bacon.cheese.burger.hot.peppers);
+			
+			var anotherCollidingNS = phnq_core.jsNS("bacon.cheese.burger.hot.peppers.very.yummy");
+			assert.equal(anotherCollidingNS, bacon.cheese.burger.hot.peppers.very.yummy);
+		});
+		
+		it("create an arbitrary namespace relative to an existing value", function()
+		{
+			var bubba =
+			{
+				gump:
+				{
+				}
+			};
+			
+			var newNS = phnq_core.jsNS("bacon.cheese.burger.hot.peppers", bubba.gump);
+			assert.equal(newNS, bubba.gump.bacon.cheese.burger.hot.peppers);
+		});
+	});
 
 	describe("clazz", function()
 	{

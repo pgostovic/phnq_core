@@ -1,5 +1,7 @@
 (function()
 {
+	var globalObj = this;
+	
 	var phnq_core =
 	{
 		isServer: function()
@@ -79,6 +81,19 @@
 				return this.extend({}, obj);
 			else
 				return obj;
+		},
+		
+		jsNS: function(ns, relObj)
+		{
+			var comps = ns.split(/\./);
+			relObj = relObj || globalObj;
+			for(var i=0; i<comps.length; i++)
+			{
+				var comp = comps[i];
+				relObj[comp] = relObj[comp] || {};
+				relObj = relObj[comp];
+			}
+			return relObj;		
 		},
 
 		jsPath: function(obj, path, valToSet)
