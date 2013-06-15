@@ -337,6 +337,15 @@
 			return "[ " + idxs.join(", ") + " ]";
 		}
 	});
+	
+	// For String.trim() backwards compatibility
+	if(!String.prototype.trim)
+	{
+		String.prototype.trim = function ()
+		{
+			return this.replace(/^\s+|\s+$/g,'');
+		};
+	}	
 
 	if(phnq_core.isServer())
 	{
