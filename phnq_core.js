@@ -26,8 +26,16 @@
 				throw "Assertion Failed: not running on client as asserted";
 		},
 		
-		shuffle: function(arr)
+		shuffle: function(arr, options)
 		{
+			options = options || {};
+			options.inPlace = !!options.inPlace;
+			
+			if(!options.inPlace)
+			{
+				arr = this.clone(arr);
+			}
+			
 		    for(var j, x, i = arr.length; i; j = parseInt(Math.random() * i), x = arr[--i], arr[i] = arr[j], arr[j] = x);
 		    return arr;
 		},
